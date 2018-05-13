@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+
+#--------!!!!!!!!----|SENDER|----!!!!!!!------------------
+
+import pika
+import sys
+
+connection = pika.BlockingConnection(pika.ConnectionParameters('192.168.43.64'))
+channel = connection.channel()
+
+channel.queue_declare(queue='omytestq', durable=False, arguments={"x-max-length":20,'x-dead-letter-exchange':'myexch.dlx'}) 
+
+channel.queue_delete(queue='omytestq')
